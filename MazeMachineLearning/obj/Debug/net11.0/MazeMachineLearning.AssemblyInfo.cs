@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MazeMachineLearning")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e587a3956243134387d429de63f837f846709ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("MazeMachineLearning")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MazeMachineLearning")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

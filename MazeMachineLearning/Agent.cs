@@ -13,11 +13,9 @@ public class Agent
 
     public Random randomAction = new Random();
 
-    public Agent(int stateAmountInput, int actionAmountInput, int startX, int startY)
+    public Agent(int stateAmountInput, int actionAmountInput)
     {
         actionAmount = actionAmountInput;
-        x = startX;
-        y = startY;
         qTable  = new double[stateAmountInput][];
         for(int i = 0; i < stateAmountInput; ++i)
         {
@@ -25,25 +23,31 @@ public class Agent
         }
     }
 
-    private int GenerateState()
+    public void DecayEpsillon(double decayValue)
     {
-        return ((x+y) * (x+y+1)) / 2 + y;
+        epsillon = epsillon * decayValue;
     }
 
-    private int GenerateAction()
+    public int GenerateState(int inputX, int inputY)
+    {
+        return ((inputX + inputY) * (inputX+inputY+1)) / 2 + inputY;
+    }
+
+    public int GenerateAction()
     {
         if(randomAction.NextDouble() < epsillon)
         {
             return randomAction.Next(actionAmount);
         }
 
-        return Array.IndexOf(qTable[GenerateState()], qTable[GenerateState()].Max());
+        return Array.IndexOf(qTable[GenerateState(x, y)], qTable[GenerateState(x, y)].Max());
     }
 
-    private void UpdateTable(int action, double reward, int nextState)
+    public void UpdateTable(int action, double reward, int nextState)
     {
-        double currentQ = qTable[GenerateState()][action];
-        double maxFutureQ = qTable[]
+        double currentQ = qTable[GenerateState(x, y)][action];
+        double maxFutureQ = qTable[nextState].Max();
+
+        qTable[GenerateState(x, y)][action] = currentQ + alpha * (reward + (gamma * maxFutureQ) - currentQ);
     }
-    
 }
