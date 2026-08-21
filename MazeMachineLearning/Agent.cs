@@ -1,12 +1,12 @@
-public class Agent
+public abstract class Agent
 {
-    private int actionAmount; //Amount of actions that can be done
-    private double[][] qTable; //Qtable for storing states and actions
-    private double alpha = 0.1; //Alpha of the Bellman equation, the learning rate (how much new information overrides old information)
-    private double gamma = 0.9; //Gamma of the Bellman equation, which accounts for the discount of future reward in the equation
-    private double epsillon = 0.9; //Epsillon, an additional aspect that determines how much the agent wants to explore.
+    protected int actionAmount; //Amount of actions that can be done
+    protected double[][] qTable; //Qtable for storing states and actions
+    protected double alpha = 0.1; //Alpha of the Bellman equation, the learning rate (how much new information overrides old information)
+    protected double gamma = 0.9; //Gamma of the Bellman equation, which accounts for the discount of future reward in the equation
+    protected double epsillon = 0.9; //Epsillon, an additional aspect that determines how much the agent wants to explore.
 
-    private double epsillonDecay = 0.9;
+    protected double epsillonDecay = 0.9;
     public int x;
 
     public int y;
@@ -37,6 +37,17 @@ public class Agent
         }
     }
 
+    public (int, int) ReturnCoords(double state)
+    {
+        int wHelper = (int)Math.Floor((Math.Sqrt(8 * state + 1) - 1) / 2);
+        int tHelper = ((wHelper * wHelper) + wHelper) / 2;
+
+        int y = (int)state - tHelper;
+        int x = wHelper - y;
+
+        return (x,y);
+    }
+
     public List<(int, int)> ReturnExploredToCoords()
     {
         List<(int, int)> path = new List<(int, int)>();
@@ -44,13 +55,7 @@ public class Agent
         {
             int nextItem = explored.First();
 
-            int wHelper = (int)Math.Floor((Math.Sqrt(8 * nextItem + 1) - 1) / 2);
-            int tHelper = ((wHelper * wHelper) + wHelper) / 2;
-
-            int y = nextItem - tHelper;
-            int x = wHelper - y;
-
-            path.Add((x,y));
+            path.Add(ReturnCoords(nextItem));
 
             explored.Remove(nextItem);
         }
@@ -76,21 +81,15 @@ public class Agent
         return ((inputX + inputY) * (inputX+inputY+1)) / 2 + inputY;
     }
 
-    public int GenerateAction()
+    public int GenerateAction(int agentX, int agentY)
     {
         if(randomAction.NextDouble() < epsillon)
         {
             return randomAction.Next(actionAmount);
         }
 
-        return Array.IndexOf(qTable[GenerateState(x, y)], qTable[GenerateState(x, y)].Max());
+        return Array.IndexOf(qTable[GenerateState(agentX, agentY)], qTable[GenerateState(agentX, agentY)].Max());
     }
 
-    public void UpdateTable(int action, double reward, int nextState)
-    {
-        double currentQ = qTable[GenerateState(x, y)][action];
-        double maxFutureQ = qTable[nextState].Max();
-
-        qTable[GenerateState(x, y)][action] = currentQ + alpha * (reward + (gamma * maxFutureQ) - currentQ);
-    }
+    public abstract void UpdateTable(int action, double reward, int nextState);
 }

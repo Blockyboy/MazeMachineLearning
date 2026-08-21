@@ -4,19 +4,21 @@ public class Environment
     int[] actionChoiceX = [1, 0, -1, 0];
     int[] actionChoiceY = [0, 1, 0, -1];
 
-    int generations = 1000000;
+    int generations = 10000;
 
-    bool showTrailing = true;
+    bool showTrailing = false;
 
-    bool showFullPath = true;
+    bool showFullPath = false;
 
     bool noRecursion = false;
 
     bool stepLimit = true;
 
-    int minimumSteps = 100;
+    int maximumSteps = 100;
 
     bool exportPathOnMaze = true;
+
+    int speed = 100;
     MazeCreator mazeCreator = new MazeCreator();
 
     public Environment(Agent inputAgent)
@@ -42,14 +44,14 @@ public class Environment
                 agent.y = keyMazePair.Value.startY;
                 agent.explored.Clear();
 
-                if(generation == generations - 1)
+                if(showFullPath)
                 {
-                    Console.WriteLine("Maze: " + filePath);
+                    displayMaze = InitialiseDisplayMaze(mazeLayout);
                 }
 
                 while(mazeLayout[agent.y,agent.x] != -10)
                 {
-                    int action = agent.GenerateAction();
+                    int action = agent.GenerateAction(agent.x, agent.y);
                     int nextX = agent.x + actionChoiceX[action];
                     int nextY = agent.y + actionChoiceY[action];
 
@@ -63,9 +65,13 @@ public class Environment
 
                     agent.UpdateTable(action, reward, agent.GenerateState(nextX, nextY));
 
-                    if(showFullPath && generation == generations -1)
+                    if(showFullPath)
                     {
+                        Console.WriteLine("Maze: " + filePath);
+                        Console.WriteLine("");
                         DisplayPath(agent.x, agent.y, displayMaze, showTrailing);
+                        Thread.Sleep(speed);
+                        Console.Clear();  
                     }
 
                     if(agent.explored.Add(agent.GenerateState(nextX, nextY)))
@@ -77,9 +83,9 @@ public class Environment
                     {
                         break;
                     }
-                    else if(stepLimit)
+                    if(stepLimit)
                     {
-                        if(agent.steps < minimumSteps)
+                        if(agent.steps < maximumSteps)
                         {
                             ++agent.steps;
                         }
