@@ -2,7 +2,7 @@ public class Agent
 {
     private int actionAmount; //Amount of actions that can be done
     private double[][] qTable; //Qtable for storing states and actions
-    private double alpha = 0.9; //Alpha of the Bellman equation, the learning rate (how much new information overrides old information)
+    private double alpha = 0.1; //Alpha of the Bellman equation, the learning rate (how much new information overrides old information)
     private double gamma = 0.9; //Gamma of the Bellman equation, which accounts for the discount of future reward in the equation
     private double epsillon = 0.9; //Epsillon, an additional aspect that determines how much the agent wants to explore.
 
@@ -10,6 +10,8 @@ public class Agent
     public int x;
 
     public int y;
+
+    public int steps = 0;
 
     public HashSet<int> explored = new HashSet<int>();
 
@@ -33,6 +35,27 @@ public class Agent
         {
             qTable[i] = new double[actionAmount];
         }
+    }
+
+    public List<(int, int)> ReturnExploredToCoords()
+    {
+        List<(int, int)> path = new List<(int, int)>();
+        while(explored.Count > 0)
+        {
+            int nextItem = explored.First();
+
+            int wHelper = (int)Math.Floor((Math.Sqrt(8 * nextItem + 1) - 1) / 2);
+            int tHelper = ((wHelper * wHelper) + wHelper) / 2;
+
+            int y = nextItem - tHelper;
+            int x = wHelper - y;
+
+            path.Add((x,y));
+
+            explored.Remove(nextItem);
+        }
+
+        return path;
     }
 
     public void ClearQTable()
