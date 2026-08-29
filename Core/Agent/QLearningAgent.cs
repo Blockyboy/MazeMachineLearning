@@ -1,6 +1,6 @@
 public class QLearningAgent : Agent
 {
-    public QLearningAgent(int stateAmountInput, int actionAmountInput) : base(stateAmountInput, actionAmountInput)
+    public QLearningAgent(int actionAmountInput) : base(actionAmountInput)
     {
         
     }

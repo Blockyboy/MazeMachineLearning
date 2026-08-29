@@ -1,6 +1,6 @@
 public class SARSAAgent : Agent
 {
-    public SARSAAgent(int stateAmountInput, int actionAmountInput) : base(stateAmountInput, actionAmountInput)
+    public SARSAAgent(int actionAmountInput) : base(actionAmountInput)
     {
         
     }

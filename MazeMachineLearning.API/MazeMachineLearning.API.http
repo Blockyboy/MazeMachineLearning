@@ -1,0 +1,11 @@
+@MazeMachineLearning.API_HostAddress = http://localhost:5005
+
+GET {{MazeMachineLearning.API_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{MazeMachineLearning.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

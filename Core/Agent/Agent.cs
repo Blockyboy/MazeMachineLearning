@@ -17,20 +17,15 @@ public abstract class Agent
 
     public Random randomAction = new Random();
 
-    public Agent(int stateAmountInput, int actionAmountInput)
+    public Agent(int actionAmountInput)
     {
         actionAmount = actionAmountInput;
-        qTable  = new double[stateAmountInput][]; //Initialising Q Table
-        for(int i = 0; i < stateAmountInput; ++i)
-        {
-            qTable[i] = new double[actionAmount];
-        }
     }
 
     public void ReInitialiseQTable(int stateAmountInput)
     {
         ClearQTable();
-        qTable  = new double[stateAmountInput][]; //Initialising Q Table
+        qTable  = new double[stateAmountInput][];
         for(int i = 0; i < stateAmountInput; ++i)
         {
             qTable[i] = new double[actionAmount];
@@ -65,9 +60,12 @@ public abstract class Agent
 
     public void ClearQTable()
     {
-        for (int i = 0; i < qTable.Length; i++)
+        if(qTable != null)
         {
-            Array.Clear(qTable[i], 0, qTable[i].Length);
+            for (int i = 0; i < qTable.Length; i++)
+            {
+                Array.Clear(qTable[i], 0, qTable[i].Length);
+            }
         }
     }
 

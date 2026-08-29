@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-
 public class Maze
 {
     public int startX;
