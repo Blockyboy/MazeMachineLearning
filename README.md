@@ -21,7 +21,7 @@ If you do not run it this way then the program wont work.
 
 If you'd like to add your own maze to the mazeImages folder, then follow the example below
 
-<img src="./MazeMachineLearning/mazeImages/Maze1.bmp" width="50%" style="image-rendering: pixelated;" alt="Example Image">
+<img src="./Maze1Example.bmp" width="50%" style="image-rendering: pixelated;" alt="Example Image">
 
 #### Maze Color Hex 
 
