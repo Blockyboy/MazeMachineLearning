@@ -1,22 +1,22 @@
 using System.Drawing;
 
-public class Environment
+public class Environment //Environment where agent solves mazes
 {
     Agent agent;
     int[] actionChoiceX = [1, 0, -1, 0];
     int[] actionChoiceY = [0, 1, 0, -1];
 
-    int generations = 4500;
+    public int generations = 4500;
 
-    bool showTrailing = false;
+    public bool showTrailing = false;
 
-    bool showFullPath = false;
+    public bool showFullPath = false;
 
-    bool noRecursion = false;
+    public bool noRecursion = false;
 
-    bool stepLimit = true;
+    public bool stepLimit = true;
 
-    int maximumSteps = 100;
+    public int maximumSteps = 100;
 
     bool exportPathOnMaze = true;
 
@@ -28,10 +28,10 @@ public class Environment
         agent = inputAgent;
     }
 
-    public void ConsoleLearning()
+    public void ConsoleLearning() //Agent learning for console application.
     {
         mazeCreator.ImportMazes();
-        foreach(KeyValuePair<string, Maze> keyMazePair in mazeCreator.mazeDictionary)
+        foreach(KeyValuePair<string, Maze> keyMazePair in mazeCreator.mazeDictionary) //Uses each maze found in mazeImages folder
         {
             string filePath = keyMazePair.Key;
             int[,] mazeLayout = keyMazePair.Value.maze;
@@ -48,9 +48,9 @@ public class Environment
         }
     }
 
-    public Bitmap APILearning(Bitmap image)
+    public Bitmap APILearning(Bitmap image) //Agent learning for API implementation
     {
-        Maze workingMaze = mazeCreator.ImportMazeFromImage(image);
+        Maze workingMaze = mazeCreator.ImportMazeFromImage(image); //Uses one image taken from API call
         int[,] mazeLayout = workingMaze.maze;
         int StartX = workingMaze.startX;
         int StartY = workingMaze.startY;
@@ -60,7 +60,7 @@ public class Environment
         RunLearning(null, mazeLayout, null, StartX, StartY);
         return mazeCreator.DrawOnMaze(image, agent.ReturnExploredToCoords());
     }
-    public HashSet<int> RunLearning(string? filePath, int[,] mazeLayout, string[,]? displayMaze, int StartX, int StartY)
+    public HashSet<int> RunLearning(string? filePath, int[,] mazeLayout, string[,]? displayMaze, int StartX, int StartY) //Runs agent learning in one maze
     {
         
         for(int generation = 0; generation < generations; ++generation)
@@ -91,7 +91,7 @@ public class Environment
 
                 agent.UpdateTable(action, reward, agent.GenerateState(nextX, nextY));
 
-                if(showFullPath)
+                if(showFullPath) //Shows the agent's full path if setting is 
                 {
                     Console.WriteLine("Generation" + generation);
                     Console.WriteLine("Maze: " + filePath);

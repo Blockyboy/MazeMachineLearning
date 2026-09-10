@@ -1,7 +1,7 @@
 # MazeMachineLearning
 MazeMachineLearning is a C# application with the core functionality of creating and running a Reinforcement Learning environment to solve a maze.
 
-Currently the 
+Currently the program has Q Learning and SARSAA agent types.
 
 This repository contains a console and API implementation
 

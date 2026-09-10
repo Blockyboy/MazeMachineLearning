@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-public class MazeCreator
+public class MazeCreator //Maze importing, exporting and display
 {
     public Dictionary<string, Maze> mazeDictionary = new();
 
@@ -18,7 +18,7 @@ public class MazeCreator
     private string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "MazeMachineLearning", "mazeImages");
     private string directoryOutput = Path.Combine(Directory.GetCurrentDirectory(), "MazeMachineLearning", "exportedMazes");
 
-    public void ImportMazes()
+    public void ImportMazes() //Import mazes from mazeImages
     {
         try
         {
@@ -33,7 +33,7 @@ public class MazeCreator
         }
     }
 
-    public Maze ImportMazeFromImage(string filePath)
+    public Maze ImportMazeFromImage(string filePath) //Import maze from any file path
     {
         using(Bitmap image = new(filePath))
         {
@@ -63,7 +63,7 @@ public class MazeCreator
         }
     }
 
-    public Maze ImportMazeFromImage(Bitmap image)
+    public Maze ImportMazeFromImage(Bitmap image) //Import maze from bitmap class
     {
         int startX = 0;
         int startY = 0;
@@ -90,7 +90,7 @@ public class MazeCreator
         return outputMaze;
     }
 
-    public Bitmap DrawOnMaze(string filePath, List<(int, int)> path)
+    public Bitmap DrawOnMaze(string filePath, List<(int, int)> path) //Draw the path on a maze from filepath
     {
         Bitmap finalImage;
         using Bitmap image = new(filePath);
@@ -114,7 +114,7 @@ public class MazeCreator
         return finalImage;
     }
 
-    public Bitmap DrawOnMaze(Bitmap image, List<(int, int)> path)
+    public Bitmap DrawOnMaze(Bitmap image, List<(int, int)> path) //Draw a path on a Bitmap object
     {
         Bitmap finalImage;
 
@@ -137,7 +137,7 @@ public class MazeCreator
         return finalImage;
     }
 
-    public void OutputDrawnMaze(Bitmap image, string filePath)
+    public void OutputDrawnMaze(Bitmap image, string filePath) //Output maze to a file path
     {
         string finalPath = Path.Combine(directoryOutput, "solution" + Path.GetFileName(filePath));
 
